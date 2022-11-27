@@ -12,6 +12,8 @@ import org.springframework.web.client.RestTemplate;
 public class StudentController {
     @Autowired
     private UserService userService;
+    @Autowired
+    private RestTemplate restTemplate;
 
     @PostMapping("/{userID}")
     public String getPermissions(@RequestBody Permissions permissions, @PathVariable long userID) throws Exception {
@@ -19,8 +21,7 @@ public class StudentController {
             Student student = (Student) userService.getUserById(userID);
             System.out.println(student);
             if(student.getTestStatus()==0) {
-                RestTemplate template = new RestTemplate();
-                String res = template.getForObject("http://localhost:9091/exam/subscribe/"+student.getUserID(), String.class);
+                String res = restTemplate.getForObject("http://EXAM-SERVICE/exam/subscribe/"+student.getUserID(), String.class);
                 System.out.println(res);
                 return "Please wait while exam coordinator starts your test";
             }
