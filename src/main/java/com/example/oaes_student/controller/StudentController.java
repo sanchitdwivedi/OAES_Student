@@ -22,7 +22,7 @@ public class StudentController {
             Student student = (Student) userService.getUserById(userID);
             System.out.println(student);
             if(student.getTestStatus()==0) {
-                String res = restTemplate.getForObject("http://EXAM-SERVICE/exam/subscribe/"+student.getUserID(), String.class);
+                String res = restTemplate.getForObject("http://EXAM-SERVICE:9091/exam/subscribe/"+student.getUserID(), String.class);
                 System.out.println(res);
                 return "Please wait while exam coordinator starts your test";
             }
